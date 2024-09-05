@@ -15,10 +15,9 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                withCredentials([string(credentialsId: 'Docker-hub', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-                    sh "docker login -u efrozkhan6194 -p ${dockerhubPassword}"
-                    sh "docker push efrozkhan6194/hiring-app:$BUILD_NUMBER"
-                }
+                withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                sh 'docker login -u efrozkhan6194 -p ${dockerhubpwd}'        
+            }
             }
         }
         stage('Checkout K8S manifest SCM'){
